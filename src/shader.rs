@@ -38,7 +38,11 @@ impl Program {
             gl::GetShaderiv(fragment_id, gl::COMPILE_STATUS, &mut success);
             if success != gl::TRUE as GLint {
                 gl::GetShaderInfoLog(fragment_id, 512, ptr::null_mut(), info_log.as_mut_ptr() as *mut GLchar);
-                println!("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n{}", std::str::from_utf8(&info_log).unwrap());
+                println!("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n{}", std::str::from_utf8(&info_log)
+                .unwrap_or_else(|err| {
+                    println!("{}", err);
+                    std::str::from_utf8(&info_log[..err.valid_up_to()]).unwrap()
+                }));
             }
 
             program_id = gl::CreateProgram();

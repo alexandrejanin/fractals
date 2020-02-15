@@ -13,7 +13,7 @@ pub struct GL {
 
 impl GL {
     pub fn new(context: &Context<PossiblyCurrent>) -> Self {
-        let gl = gl::load_with(|ptr| context.get_proc_address(ptr) as *const _);
+        gl::load_with(|ptr| context.get_proc_address(ptr) as *const _);
 
         let program = Program::new("src/shader.vert", "src/shader.frag");
         program.use_program();
