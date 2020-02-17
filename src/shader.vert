@@ -2,7 +2,10 @@
 layout (location = 0) in vec3 pos;
 out vec2 coord;
 
+uniform vec2 offset;
+uniform float scale;
+
 void main() {
     gl_Position = vec4(pos, 1.0);
-    coord = pos.xy;
+    coord = offset + scale * (pos.xy);
 }

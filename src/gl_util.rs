@@ -1,8 +1,8 @@
-use std::{mem::size_of_val, ptr};
 use std::mem::size_of;
+use std::{mem::size_of_val, ptr};
 
 use gl::{self, types::*};
-use glutin::{Context, dpi::PhysicalSize, PossiblyCurrent};
+use glutin::{dpi::PhysicalSize, Context, PossiblyCurrent};
 
 use crate::shader::Program;
 
@@ -12,6 +12,10 @@ pub struct GL {
 }
 
 impl GL {
+    pub fn program(&self) -> &Program {
+        &self.program
+    }
+
     pub fn new(context: &Context<PossiblyCurrent>) -> Self {
         gl::load_with(|ptr| context.get_proc_address(ptr) as *const _);
 
@@ -19,27 +23,23 @@ impl GL {
         program.use_program();
 
         let vertices: [GLfloat; 18] = [
-            1.0, 1.0, 0.0,
-            1.0, -1.0, 0.0,
-            -1.0, -1.0, 0.0,
-            1.0, 1.0, 0.0,
-            -1.0, 1.0, 0.0,
-            -1.0, -1.0, 0.0,
+            1.0, 1.0, 0.0, 1.0, -1.0, 0.0, -1.0, -1.0, 0.0, 1.0, 1.0, 0.0, -1.0, 1.0, 0.0, -1.0,
+            -1.0, 0.0,
         ];
 
-//        let triangles: [GLint; 6] = [
-//            0, 1, 3,
-//            1, 2, 3,
-//        ];
+        //        let triangles: [GLint; 6] = [
+        //            0, 1, 3,
+        //            1, 2, 3,
+        //        ];
 
         let mut vao = 0;
         let mut vbo = 0;
-//        let mut ebo = 0;
+        //        let mut ebo = 0;
 
         unsafe {
             gl::GenVertexArrays(1, &mut vao);
             gl::GenBuffers(1, &mut vbo);
-//            gl::GenBuffers(1, &mut ebo);
+            //            gl::GenBuffers(1, &mut ebo);
 
             gl::BindVertexArray(vao);
 
@@ -51,13 +51,13 @@ impl GL {
                 gl::STATIC_DRAW,
             );
 
-//            gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, ebo);
-//            gl::BufferData(
-//                gl::ARRAY_BUFFER,
-//                (triangles.len() * size_of::<GLint>()) as GLsizeiptr,
-//                triangles.as_ptr() as *const _,
-//                gl::STATIC_DRAW,
-//            );
+            //            gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, ebo);
+            //            gl::BufferData(
+            //                gl::ARRAY_BUFFER,
+            //                (triangles.len() * size_of::<GLint>()) as GLsizeiptr,
+            //                triangles.as_ptr() as *const _,
+            //                gl::STATIC_DRAW,
+            //            );
 
             gl::VertexAttribPointer(
                 0,
@@ -73,10 +73,7 @@ impl GL {
             gl::BindVertexArray(0);
         }
 
-        Self {
-            vao,
-            program,
-        }
+        Self { vao, program }
     }
 
     pub fn draw(&self) {
@@ -86,7 +83,7 @@ impl GL {
             self.program.use_program();
             gl::BindVertexArray(self.vao);
             gl::DrawArrays(gl::TRIANGLES, 0, 6);
-//            gl::DrawElements(gl::TRIANGLES, 6, gl::UNSIGNED_INT, ptr::null());
+            //            gl::DrawElements(gl::TRIANGLES, 6, gl::UNSIGNED_INT, ptr::null());
             gl::BindVertexArray(0);
         }
     }
