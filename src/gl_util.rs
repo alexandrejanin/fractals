@@ -1,8 +1,7 @@
-use std::mem::size_of;
-use std::{mem::size_of_val, ptr};
+use std::{mem::size_of, ptr};
 
 use gl::{self, types::*};
-use glutin::{dpi::PhysicalSize, Context, PossiblyCurrent};
+use glutin::{Context, PossiblyCurrent};
 
 use crate::shader::Program;
 
