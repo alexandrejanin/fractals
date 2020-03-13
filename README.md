@@ -2,7 +2,7 @@
 
 A fragment shader based Mandelbrot set visualizer.
 
-#### Controls:
+### Controls:
 
 | Key | Action |
 |---|---|
@@ -10,12 +10,16 @@ A fragment shader based Mandelbrot set visualizer.
 | W | Zoom in |
 | Arrow keys | Movement |
 
-![image](images/full.png)
+### Screenshots
+
+Full Mandelbrot set
+
+![Full Mandelbrot set](images/full.png)
 
 x1,000 zoom
 
-![image](images/x1000.png)
+![x1000 zoom](images/x1000.png)
 
 x100,000 zoom (some artifacts appear at this point due to 32-bit floating point precision)
 
-![image](images/x100000.png)
+![x100000 zoom](images/x100000.png)
