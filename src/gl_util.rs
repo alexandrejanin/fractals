@@ -15,10 +15,10 @@ impl GL {
         &self.program
     }
 
-    pub fn new(context: &Context<PossiblyCurrent>) -> Self {
+    pub fn new(context: &Context<PossiblyCurrent>, vertex_shader: &str, fragment_shader_path: &str) -> Self {
         gl::load_with(|ptr| context.get_proc_address(ptr) as *const _);
 
-        let program = Program::new("src/shader.vert", "src/shader.frag");
+        let program = Program::new(vertex_shader, fragment_shader_path);
         program.use_program();
 
         let vertices: [GLfloat; 18] = [
